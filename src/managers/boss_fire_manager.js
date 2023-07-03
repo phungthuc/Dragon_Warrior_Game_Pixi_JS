@@ -1,5 +1,8 @@
 import { Container } from "pixi.js";
 import BossFire from "../models/boss_fire";
+import { GameConstant } from "../constants";
+import RectangleCollider from "../collision/rectangle_collider";
+import { eventEmitter } from "../utils/utils";
 
 export default class BossFireManager extends Container {
     constructor() {
@@ -8,32 +11,47 @@ export default class BossFireManager extends Container {
         this.bossFires = [];
 
         this._init();
+        this.rectCollider = new RectangleCollider();
     }
 
     _init() {
-        for (let i = 0; i < 6; i++) {
-            i % 2 == 0 ? this.bossFire = new BossFire(Math.PI / 18 * i) :
-                this.bossFire = new BossFire(- Math.PI / 18 * i)
+        for (let i = 0; i < GameConstant.BOSS_FIRE_QUANTITY; i++) {
+            i % 2 == 0 ? this.bossFire = new BossFire(GameConstant.BOSS_FIRE_ANGLE * i) :
+                this.bossFire = new BossFire(- GameConstant.BOSS_FIRE_ANGLE * i)
             this.addChild(this.bossFire);
             this.bossFires.push(this.bossFire);
         }
     }
 
-    update(delta) {
-        for (let i = 0; i < 6; i++) {
+    update(delta, dragonPosition) {
+        for (let i = 0; i < GameConstant.BOSS_FIRE_QUANTITY; i++) {
             if (i % 2 == 0) {
-                this.bossFires[i].x -= 5;
-                this.bossFires[i].y -= Math.PI / 4 * i;
+                this.bossFires[i].x -= GameConstant.BOSS_FIRE_SPEED;
+                this.bossFires[i].y -= GameConstant.BOSS_FIRE_VY * i;
             } else {
-                this.bossFires[i].x -= 5;
-                this.bossFires[i].y -= -Math.PI / 4 * i;
+                this.bossFires[i].x -= GameConstant.BOSS_FIRE_SPEED;
+                this.bossFires[i].y -= -GameConstant.BOSS_FIRE_VY * i;
             }
         }
-        5
+
+        this.wallCollision();
+        this.onCollision(dragonPosition);
     }
 
-    onCollision() {
+    onCollision(dragonPosition) {
+        for (let i = 0; i < this.bossFires.length; i++) {
+            if (this.rectCollider.checkCollision(this.bossFires[i].x, this.bossFires[i].y, GameConstant.BOSS_FIRE_WIDTH, GameConstant.BOSS_FIRE_HEIGHT,
+                dragonPosition[0] + GameConstant.DRAGON_WIDTH / 3, dragonPosition[1] + GameConstant.DRAGON_HEIGHT / 2, GameConstant.DRAGON_WIDTH / 3, GameConstant.DRAGON_HEIGHT / 2)) {
+                eventEmitter.emit(GameConstant.EVENT_LOSS_GAME);
+            }
+        }
+    }
 
+    wallCollision() {
+        if (this.bossFires[0].x < - GameConstant.BOSS_FIRE_WIDTH) {
+            this.bossFires = [];
+            this._init();
+        }
     }
 
     checkEventEmitter() {
