@@ -36,6 +36,8 @@ export const GameConstant = {
     //Boss Fire
     BOSS_FIRE_WIDTH: 72,
     BOSS_FIRE_HEIGHT: 30,
+    BOSS_FIRE_X: 780,
+    BOSS_FIRE_Y: 420,
     BOSS_FIRE_SPEED: 5,
     BOSS_FIRE_ANGLE: Math.PI / 18,
     BOSS_FIRE_VY: Math.PI / 4,
