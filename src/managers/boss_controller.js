@@ -1,5 +1,6 @@
 import { Container } from "pixi.js";
 import Boss from "../models/boss";
+import BossFireManager from "./boss_fire_manager";
 
 export default class BossController extends Container {
     constructor() {
@@ -11,9 +12,13 @@ export default class BossController extends Container {
     _init() {
         this.boss = new Boss();
         this.addChild(this.boss);
+
+        this.bossFireManager = new BossFireManager();
+        this.addChild(this.bossFireManager);
     }
 
-    update(delta, pipeShot) {
+    update(delta, pipeShot, dragonPosition) {
         this.boss.update(delta, pipeShot);
+        this.bossFireManager.update(delta, dragonPosition);
     }
 }
