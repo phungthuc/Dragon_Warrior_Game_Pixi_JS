@@ -1,3 +1,4 @@
+import { GameConstant } from "../constants";
 import { eventEmitter } from "../utils/utils";
 
 export default class PlayerController {
@@ -7,7 +8,7 @@ export default class PlayerController {
 
     onKeyUp(event) {
         if (event.keyCode == 32) {
-            eventEmitter.emit("flap");
+            eventEmitter.emit(GameConstant.EVENT_DRAGON_FLAP);
         }
     }
 }

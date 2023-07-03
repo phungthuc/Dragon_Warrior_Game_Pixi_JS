@@ -1,6 +1,6 @@
 import { Container, Sprite, Text, TextStyle, utils } from "pixi.js";
 import { GameConstant } from "../constants";
-import RectangleCollider from "../collision/rectangle_collisder";
+import RectangleCollider from "../collision/rectangle_collider";
 import { eventEmitter } from "../utils/utils";
 
 export default class Boss extends Container {
@@ -41,7 +41,7 @@ export default class Boss extends Container {
 
     updateHealth(pipeShot) {
         if (this.health == 0) {
-            eventEmitter.emit("gameWin");
+            eventEmitter.emit(GameConstant.EVENT_WIN_GAME);
         }
         if (pipeShot == "boss") {
             this.health -= 1;

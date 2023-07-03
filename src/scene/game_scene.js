@@ -78,10 +78,10 @@ export default class GameScene extends Application {
     }
 
     checkEventEmitter() {
-        eventEmitter.on("gameLoss", () => {
+        eventEmitter.on(GameConstant.EVENT_LOSS_GAME, () => {
             this.end("loss");
         });
-        eventEmitter.on("gameWin", () => {
+        eventEmitter.on(GameConstant.EVENT_WIN_GAME, () => {
             this.end("win");
         });
     }

@@ -63,13 +63,15 @@ export default class PipeManager extends Container {
     }
 
     addPipe() {
-        if (this.countPipe < 2) {
-            if (this.pipesPosition[this.pipes.length - 1].xTop < GameConstant.SCREEN_WIDTH / 2) {
+        if (this.countPipe < GameConstant.PIPE_QUANTITY) {
+            if (this.pipesPosition[this.pipes.length - 1].xTop < GameConstant.SCREEN_WIDTH / 2 &&
+                this.pipesPosition[this.pipes.length - 1].xBottom < GameConstant.SCREEN_WIDTH / 2) {
                 this._init();
                 this.countPipe += 1;
             }
-        } else if (this.isDone == false && this.pipesPosition[this.pipes.length - 1].xTop < -GameConstant.PIPE_WIDTH) {
-            eventEmitter.emit("donePipe");
+        } else if (this.isDone == false && this.pipesPosition[this.pipes.length - 1].xTop < -GameConstant.PIPE_WIDTH ||
+            this.isDone == false && this.pipesPosition[this.pipes.length - 1].xBottom < -GameConstant.PIPE_WIDTH) {
+            eventEmitter.emit(GameConstant.EVENT_DONE_PIPE);
             this.isDone = true;
         }
     }
