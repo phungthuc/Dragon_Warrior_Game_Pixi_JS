@@ -18,7 +18,7 @@ export default class BossFire extends Sprite {
     }
 
     setPosition() {
-        this.position.set(780, 420);
+        this.position.set(GameConstant.BOSS_FIRE_X, GameConstant.BOSS_FIRE_Y);
         this.rotation = this.angle;
     }
 
