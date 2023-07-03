@@ -1,8 +1,8 @@
 import { AnimatedSprite, Container, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
 import { eventEmitter } from "../utils/utils";
-import DragonCollisder from "../collision/dragon_collisder";
-import RectangleCollider from "../collision/rectangle_collisder";
+import DragonCollider from "../collision/dragon_collider";
+import RectangleCollider from "../collision/rectangle_collider";
 
 export default class Dragon extends Container {
     constructor() {
@@ -39,8 +39,8 @@ export default class Dragon extends Container {
 
         this.checkEventEmitter();
 
-        this.dragonCollisder = new DragonCollisder();
-        this.rectCollisder = new RectangleCollider();
+        this.dragonCollisder = new DragonCollider();
+        this.rectCollider = new RectangleCollider();
     }
 
     update(delta, pipesPosition) {
@@ -72,19 +72,19 @@ export default class Dragon extends Container {
         }
 
         pipesPosition.forEach(pipePosition => {
-            if (this.rectCollisder.checkCollision(this.animatedSprite.x + GameConstant.DRAGON_WIDTH / 3,
+            if (this.rectCollider.checkCollision(this.animatedSprite.x + GameConstant.DRAGON_WIDTH / 3,
                 this.animatedSprite.y + GameConstant.DRAGON_HEIGHT / 2, GameConstant.DRAGON_WIDTH / 3, GameConstant.DRAGON_HEIGHT / 2,
                 pipePosition.xTop, pipePosition.yTop - 20, GameConstant.PIPE_WIDTH, GameConstant.PIPE_HEIGHT) != null ||
-                this.rectCollisder.checkCollision(this.animatedSprite.x + GameConstant.DRAGON_WIDTH / 3,
+                this.rectCollider.checkCollision(this.animatedSprite.x + GameConstant.DRAGON_WIDTH / 3,
                     this.animatedSprite.y + GameConstant.DRAGON_HEIGHT / 2, GameConstant.DRAGON_WIDTH / 3, GameConstant.DRAGON_HEIGHT / 2,
                     pipePosition.xBottom, pipePosition.yBottom + 20, GameConstant.PIPE_WIDTH, GameConstant.PIPE_HEIGHT) != null) {
-                eventEmitter.emit("gameLoss");
+                eventEmitter.emit(GameConstant.EVENT_LOSS_GAME);
             }
         });
     }
 
     checkEventEmitter() {
-        eventEmitter.on("flap", () => {
+        eventEmitter.on(GameConstant.EVENT_DRAGON_FLAP, () => {
             this.acceleration = GameConstant.FORCE;
         });
     }
