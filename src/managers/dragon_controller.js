@@ -23,4 +23,8 @@ export default class DragonController extends Container {
         this.positionDragon = this.dragon.getPosition();
         return this.dragonFireManader.update(delta, this.positionDragon[0], this.positionDragon[1], pipePosition);
     }
+
+    getPosition() {
+        return this.positionDragon;
+    }
 }
