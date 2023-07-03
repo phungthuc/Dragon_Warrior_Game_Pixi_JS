@@ -1,7 +1,7 @@
 import { Container, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
 
-export default class BossFire extends Sprite {
+export class BossFire extends Sprite {
     constructor(angle) {
         super(utils.TextureCache["assets/images/boss/fireball_03.png"]);
 

@@ -1,7 +1,7 @@
 import { Container, Text, TextStyle } from "pixi.js";
 import { GameConstant } from "../constants";
 
-export default class EndScene extends Container {
+export class EndScene extends Container {
     constructor(status) {
         super();
 

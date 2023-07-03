@@ -1,7 +1,7 @@
 import { Container, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
 
-export default class Background extends Container {
+export class Background extends Container {
     constructor() {
         super();
 

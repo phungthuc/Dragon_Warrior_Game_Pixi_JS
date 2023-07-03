@@ -1,10 +1,10 @@
 import { AnimatedSprite, Container, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
 import { eventEmitter } from "../utils/utils";
-import DragonCollider from "../collision/dragon_collider";
-import RectangleCollider from "../collision/rectangle_collider";
+import { RectangleCollider } from "../collision/rectangle_collider";
+import { DragonCollider } from "../collision/dragon_collider";
 
-export default class Dragon extends Container {
+export class Dragon extends Container {
     constructor() {
         super();
 

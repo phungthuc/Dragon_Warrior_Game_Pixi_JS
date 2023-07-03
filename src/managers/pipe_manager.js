@@ -1,9 +1,9 @@
 import { Container } from "pixi.js";
-import Pipe from "../models/pipe";
 import { GameConstant } from "../constants";
 import { eventEmitter } from "../utils/utils";
+import { Pipe } from "../models/pipe";
 
-export default class PipeManager extends Container {
+export class PipeManager extends Container {
     constructor() {
         super();
 

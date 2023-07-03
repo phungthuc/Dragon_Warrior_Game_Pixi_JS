@@ -1,11 +1,11 @@
 import { Application, Container, Loader, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
-import Background from "../models/background";
-import GameManager from "../managers/game_manager";
-import EndScene from "./end_scene";
 import { eventEmitter } from "../utils/utils";
+import { GameManager } from "../managers/game_manager";
+import { EndScene } from "./end_scene";
+import { Background } from "../models/background";
 
-export default class GameScene extends Application {
+export class GameScene extends Application {
     constructor() {
         super({
             width: GameConstant.SCREEN_WIDTH,

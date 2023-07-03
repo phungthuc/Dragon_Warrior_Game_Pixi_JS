@@ -3,7 +3,7 @@ import { GameConstant } from "../constants";
 import { Emitter, Particle } from "pixi-particles";
 import * as  particleSettings from "../emitter.json";
 
-export default class DragonFire extends Container {
+export class DragonFire extends Container {
     constructor(xP, yP) {
         super();
 

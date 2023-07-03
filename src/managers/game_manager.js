@@ -1,14 +1,13 @@
 import { Container } from "pixi.js";
-import BossController from "./boss_controller";
-import DragonController from "./dragon_controller";
-import PlayerController from "./player_controller";
-import PipeManager from "./pipe_manager";
-import RectangleCollider from "../collision/rectangle_collider";
+import { BossController } from "./boss_controller";
+import { DragonController } from "./dragon_controller";
+import { PlayerController } from "./player_controller";
+import { PipeManager } from "./pipe_manager";
 import { eventEmitter } from "../utils/utils";
-import BossFireManager from "./boss_fire_manager";
 import { GameConstant } from "../constants";
+import { RectangleCollider } from "../collision/rectangle_collider";
 
-export default class GameManager extends Container {
+export class GameManager extends Container {
     constructor() {
         super();
 

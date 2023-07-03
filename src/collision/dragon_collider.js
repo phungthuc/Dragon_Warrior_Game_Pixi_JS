@@ -1,8 +1,7 @@
 import { GameConstant } from "../constants";
 
-export default class DragonCollider {
+export class DragonCollider {
     constructor() {
-
     }
 
     wallCollision(y) {

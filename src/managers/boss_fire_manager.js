@@ -1,10 +1,10 @@
 import { Container } from "pixi.js";
-import BossFire from "../models/boss_fire";
+import { BossFire } from "../models/boss_fire";
 import { GameConstant } from "../constants";
-import RectangleCollider from "../collision/rectangle_collider";
 import { eventEmitter } from "../utils/utils";
+import { RectangleCollider } from "../collision/rectangle_collider";
 
-export default class BossFireManager extends Container {
+export class BossFireManager extends Container {
     constructor() {
         super();
 

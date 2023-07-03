@@ -1,7 +1,7 @@
 import { GameConstant } from "../constants";
 import { eventEmitter } from "../utils/utils";
 
-export default class PlayerController {
+export class PlayerController {
     constructor() {
         window.addEventListener("keyup", this.onKeyUp);
     }

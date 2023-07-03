@@ -1,10 +1,10 @@
 import { Container } from "pixi.js";
-import DragonFire from "../models/dragon_fire";
+import { DragonFire } from "../models/dragon_fire";
 import { GameConstant } from "../constants";
-import RectangleCollider from "../collision/rectangle_collider";
 import { eventEmitter } from "../utils/utils";
+import { RectangleCollider } from "../collision/rectangle_collider";
 
-export default class DragonFireManager extends Container {
+export class DragonFireManager extends Container {
     constructor() {
         super();
 

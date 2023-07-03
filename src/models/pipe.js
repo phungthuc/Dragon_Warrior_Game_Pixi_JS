@@ -2,7 +2,7 @@ import { Container, Sprite, Text, TextStyle, utils } from "pixi.js";
 import { randomInt } from "../utils/utils";
 import { GameConstant } from "../constants";
 
-export default class Pipe extends Container {
+export class Pipe extends Container {
     constructor() {
         super();
 

@@ -1,8 +1,8 @@
 import { Container } from "pixi.js";
-import Boss from "../models/boss";
-import BossFireManager from "./boss_fire_manager";
+import { Boss } from "../models/boss";
+import { BossFireManager } from "../managers/boss_fire_manager";
 
-export default class BossController extends Container {
+export class BossController extends Container {
     constructor() {
         super();
 

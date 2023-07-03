@@ -1,8 +1,8 @@
 import { Container } from "pixi.js";
-import Dragon from "../models/dragon";
-import DragonFireManager from "./dragon_fire_manager";
+import { Dragon } from "../models/dragon";
+import { DragonFireManager } from "./dragon_fire_manager";
 
-export default class DragonController extends Container {
+export class DragonController extends Container {
     constructor() {
         super();
 
