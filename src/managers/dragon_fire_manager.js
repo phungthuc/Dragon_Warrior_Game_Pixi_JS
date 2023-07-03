@@ -1,7 +1,7 @@
 import { Container } from "pixi.js";
 import DragonFire from "../models/dragon_fire";
 import { GameConstant } from "../constants";
-import RectangleCollider from "../collision/rectangle_collisder";
+import RectangleCollider from "../collision/rectangle_collider";
 import { eventEmitter } from "../utils/utils";
 
 export default class DragonFireManager extends Container {
@@ -16,7 +16,7 @@ export default class DragonFireManager extends Container {
         this.dragonFires = [];
         this.pipeShot = [];
         this.isDonePipe = false;
-        this.rectCollisder = new RectangleCollider();
+        this.rectCollider = new RectangleCollider();
 
         window.addEventListener("mouseup", this.onMouseUp.bind(this), false);
 
@@ -56,7 +56,7 @@ export default class DragonFireManager extends Container {
             for (let i = 0; i < this.dragonFires.length; i++) {
                 for (let j = 0; j < pipePosition.length; j++) {
                     if (this.dragonFires[i] != null) {
-                        if (this.rectCollisder.checkCollision(this.dragonFires[i].getPosition()[0], this.dragonFires[i].getPosition()[1],
+                        if (this.rectCollider.checkCollision(this.dragonFires[i].getPosition()[0], this.dragonFires[i].getPosition()[1],
                             GameConstant.DRAGON_FIRE_WIDTH, GameConstant.DRAGON_FIRE_HEIGHT, pipePosition[j].xTop, pipePosition[j].yTop,
                             GameConstant.PIPE_WIDTH, GameConstant.PIPE_HEIGHT) != null) {
                             this.dragonFires[i].enableParticle();
@@ -65,7 +65,7 @@ export default class DragonFireManager extends Container {
                                 "top",
                                 j
                             ];
-                        } else if (this.rectCollisder.checkCollision(this.dragonFires[i].getPosition()[0], this.dragonFires[i].getPosition()[1],
+                        } else if (this.rectCollider.checkCollision(this.dragonFires[i].getPosition()[0], this.dragonFires[i].getPosition()[1],
                             GameConstant.DRAGON_FIRE_WIDTH, GameConstant.DRAGON_FIRE_HEIGHT, pipePosition[j].xBottom, pipePosition[j].yBottom,
                             GameConstant.PIPE_WIDTH, GameConstant.PIPE_HEIGHT) != null) {
                             this.dragonFires[i].enableParticle();
@@ -81,7 +81,7 @@ export default class DragonFireManager extends Container {
             }
         } else {
             for (let i = 0; i < this.dragonFires.length; i++) {
-                if (this.rectCollisder.checkCollision(this.dragonFires[i].getPosition()[0], this.dragonFires[i].getPosition()[1],
+                if (this.rectCollider.checkCollision(this.dragonFires[i].getPosition()[0], this.dragonFires[i].getPosition()[1],
                     GameConstant.DRAGON_FIRE_WIDTH, GameConstant.DRAGON_FIRE_HEIGHT, GameConstant.BOSS_X + GameConstant.DRAGON_FIRE_WIDTH, GameConstant.BOSS_Y, GameConstant.BOSS_WIDTH, GameConstant.BOSS_HEIGHT) != null) {
                     this.dragonFires[i].enableParticle();
                     this.dragonFires.splice(i, 1);
@@ -92,7 +92,7 @@ export default class DragonFireManager extends Container {
     }
 
     checkEventEmitter() {
-        eventEmitter.on("donePipe", () => {
+        eventEmitter.on(GameConstant.EVENT_DONE_PIPE, () => {
             this.isDonePipe = true;
         });
     }
