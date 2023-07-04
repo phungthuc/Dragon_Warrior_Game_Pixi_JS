@@ -1,7 +1,6 @@
 import { Container } from "pixi.js";
 import { BossFire } from "../models/boss_fire";
 import { GameConstant } from "../constants";
-import { eventEmitter } from "../utils/utils";
 import { RectangleCollider } from "../collision/rectangle_collider";
 
 export class BossFireManager extends Container {
@@ -42,7 +41,7 @@ export class BossFireManager extends Container {
         for (let i = 0; i < this.bossFires.length; i++) {
             if (this.rectCollider.checkCollision(this.bossFires[i].x, this.bossFires[i].y, GameConstant.BOSS_FIRE_WIDTH, GameConstant.BOSS_FIRE_HEIGHT,
                 dragonPosition[0] + GameConstant.DRAGON_WIDTH / 3, dragonPosition[1] + GameConstant.DRAGON_HEIGHT / 2, GameConstant.DRAGON_WIDTH / 3, GameConstant.DRAGON_HEIGHT / 2)) {
-                eventEmitter.emit(GameConstant.EVENT_LOSS_GAME);
+                this.emit(GameConstant.EVENT_LOSS_GAME);
             }
         }
     }

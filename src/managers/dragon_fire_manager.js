@@ -1,12 +1,14 @@
 import { Container } from "pixi.js";
 import { DragonFire } from "../models/dragon_fire";
 import { GameConstant } from "../constants";
-import { eventEmitter } from "../utils/utils";
 import { RectangleCollider } from "../collision/rectangle_collider";
+import { PipeManagerEvent } from "./pipe_manager";
 
 export class DragonFireManager extends Container {
-    constructor() {
+    constructor(pipeContainer) {
         super();
+
+        this.pipeContainer = pipeContainer;
 
         this.offsetX = null;
         this.offsetY = null;
@@ -92,7 +94,7 @@ export class DragonFireManager extends Container {
     }
 
     checkEventEmitter() {
-        eventEmitter.on(GameConstant.EVENT_DONE_PIPE, () => {
+        this.pipeContainer.on(PipeManagerEvent.EVENT_DONE_PIPE, () => {
             this.isDonePipe = true;
         });
     }

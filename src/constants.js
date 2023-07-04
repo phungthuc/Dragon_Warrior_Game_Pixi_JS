@@ -8,8 +8,6 @@ export const GameConstant = {
     //Event
     EVENT_WIN_GAME: "gameWin",
     EVENT_LOSS_GAME: "lossGame",
-    EVENT_DONE_PIPE: "donePipe",
-    EVENT_DRAGON_FLAP: "flap",
 
     //Boss
     BOSS_WIDTH: 304,
@@ -50,5 +48,5 @@ export const GameConstant = {
     DISTANCE_PIPE: 160,
     PIPE_X: 1080,
     PIPE_VX: 3,
-    PIPE_QUANTITY: 5,
+    PIPE_QUANTITY: 2,
 };

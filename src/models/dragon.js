@@ -1,6 +1,5 @@
 import { AnimatedSprite, Container, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
-import { eventEmitter } from "../utils/utils";
 import { RectangleCollider } from "../collision/rectangle_collider";
 import { DragonCollider } from "../collision/dragon_collider";
 
@@ -37,10 +36,10 @@ export class Dragon extends Container {
 
         this.animatedSprite.play();
 
-        this.checkEventEmitter();
-
         this.dragonCollisder = new DragonCollider();
         this.rectCollider = new RectangleCollider();
+
+        window.addEventListener("keyup", this.onKeyUp.bind(this));
     }
 
     update(delta, pipesPosition) {
@@ -78,14 +77,14 @@ export class Dragon extends Container {
                 this.rectCollider.checkCollision(this.animatedSprite.x + GameConstant.DRAGON_WIDTH / 3,
                     this.animatedSprite.y + GameConstant.DRAGON_HEIGHT / 2, GameConstant.DRAGON_WIDTH / 3, GameConstant.DRAGON_HEIGHT / 2,
                     pipePosition.xBottom, pipePosition.yBottom + 20, GameConstant.PIPE_WIDTH, GameConstant.PIPE_HEIGHT) != null) {
-                eventEmitter.emit(GameConstant.EVENT_LOSS_GAME);
+                this.emit(GameConstant.EVENT_LOSS_GAME);
             }
         });
     }
 
-    checkEventEmitter() {
-        eventEmitter.on(GameConstant.EVENT_DRAGON_FLAP, () => {
+    onKeyUp(event) {
+        if (event.keyCode == 32) {
             this.acceleration = GameConstant.FORCE;
-        });
+        }
     }
 }

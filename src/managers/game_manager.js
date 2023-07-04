@@ -1,11 +1,9 @@
 import { Container } from "pixi.js";
 import { BossController } from "./boss_controller";
 import { DragonController } from "./dragon_controller";
-import { PlayerController } from "./player_controller";
-import { PipeManager } from "./pipe_manager";
-import { eventEmitter } from "../utils/utils";
-import { GameConstant } from "../constants";
+import { PipeManager, PipeManagerEvent } from "./pipe_manager";
 import { RectangleCollider } from "../collision/rectangle_collider";
+import { GameConstant } from "../constants";
 
 export class GameManager extends Container {
     constructor() {
@@ -18,9 +16,9 @@ export class GameManager extends Container {
         this.pipeShot = [];
 
         this.isDonePipe = false;
+        this.gameStatus = null;
 
         this.rectCollider = new RectangleCollider();
-        this.checkEventEmitter();
     }
 
     _init() {
@@ -28,14 +26,11 @@ export class GameManager extends Container {
         this.bossController.visible = false;
         this.addChild(this.bossController);
 
-        this.dragonController = new DragonController();
-        this.addChild(this.dragonController);
-
         this.pipeManager = new PipeManager();
         this.addChild(this.pipeManager);
 
-        this.playerController = new PlayerController();
-
+        this.dragonController = new DragonController(this.pipeManager);
+        this.addChild(this.dragonController);
     }
 
     update(delta) {
@@ -46,16 +41,24 @@ export class GameManager extends Container {
         } else {
             this.pipeManager.update(delta, this.pipeShot);
         }
+        this.onCollision();
+        return this.gameStatus;
     }
 
     onCollision() {
-
-    }
-
-    checkEventEmitter() {
-        eventEmitter.on(GameConstant.EVENT_DONE_PIPE, () => {
+        this.dragonController.on(GameConstant.EVENT_LOSS_GAME, () => {
+            this.gameStatus = "loss";
+        });
+        this.bossController.on(GameConstant.EVENT_LOSS_GAME, () => {
+            this.gameStatus = "loss";
+        });
+        this.bossController.on(GameConstant.EVENT_WIN_GAME, () => {
+            this.gameStatus = "win";
+        });
+        this.pipeManager.on(PipeManagerEvent.EVENT_DONE_PIPE, () => {
             this.bossController.visible = true;
             this.isDonePipe = true;
         });
     }
+
 }

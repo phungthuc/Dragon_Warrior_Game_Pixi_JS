@@ -1,6 +1,5 @@
 import { Application, Container, Loader, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
-import { eventEmitter } from "../utils/utils";
 import { GameManager } from "../managers/game_manager";
 import { EndScene } from "./end_scene";
 import { Background } from "../models/background";
@@ -24,7 +23,7 @@ export class GameScene extends Application {
         this.gameScene = new Container();
         this.stage.addChild(this.gameScene);
 
-        this.checkEventEmitter();
+        this.gameStatus = null;
 
     }
 
@@ -74,16 +73,12 @@ export class GameScene extends Application {
     }
 
     gameLoop(delta) {
-        this.gameManager.update(delta);
-    }
-
-    checkEventEmitter() {
-        eventEmitter.on(GameConstant.EVENT_LOSS_GAME, () => {
-            this.end("loss");
-        });
-        eventEmitter.on(GameConstant.EVENT_WIN_GAME, () => {
-            this.end("win");
-        });
+        this.gameStatus = this.gameManager.update(delta);
+        if (this.gameStatus == "loss") {
+            this.end(this.gameStatus);
+        } else if (this.gameStatus == "win") {
+            this.end(this.gameStatus);
+        }
     }
 
     end(status) {

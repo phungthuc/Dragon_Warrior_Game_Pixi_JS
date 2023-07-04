@@ -1,7 +1,10 @@
 import { Container } from "pixi.js";
 import { GameConstant } from "../constants";
-import { eventEmitter } from "../utils/utils";
 import { Pipe } from "../models/pipe";
+
+export const PipeManagerEvent = Object.freeze({
+    EVENT_DONE_PIPE: "pipemanager: done",
+});
 
 export class PipeManager extends Container {
     constructor() {
@@ -54,6 +57,18 @@ export class PipeManager extends Container {
 
     }
 
+    create() {
+        this.pipe = new Pipe();
+        this.addChild(this.pipe);
+        this.pipes.push(this.pipe);
+        this.pipesPosition.push({
+            xTop: this.pipe.getPosition()[0],
+            yTop: this.pipe.getPosition()[1],
+            xBottom: this.pipe.getPosition()[2],
+            yBottom: this.pipe.getPosition()[3]
+        });
+    }
+
     getPosition() {
         return this.pipesPosition;
     }
@@ -66,12 +81,12 @@ export class PipeManager extends Container {
         if (this.countPipe < GameConstant.PIPE_QUANTITY) {
             if (this.pipesPosition[this.pipes.length - 1].xTop < GameConstant.SCREEN_WIDTH / 2 &&
                 this.pipesPosition[this.pipes.length - 1].xBottom < GameConstant.SCREEN_WIDTH / 2) {
-                this._init();
+                this.create();
                 this.countPipe += 1;
             }
         } else if (this.isDone == false && this.pipesPosition[this.pipes.length - 1].xTop < -GameConstant.PIPE_WIDTH ||
             this.isDone == false && this.pipesPosition[this.pipes.length - 1].xBottom < -GameConstant.PIPE_WIDTH) {
-            eventEmitter.emit(GameConstant.EVENT_DONE_PIPE);
+            this.emit(PipeManagerEvent.EVENT_DONE_PIPE);
             this.isDone = true;
         }
     }
