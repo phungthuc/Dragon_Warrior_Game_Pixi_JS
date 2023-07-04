@@ -1,8 +1,8 @@
 import { Application, Container, Loader, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
-import { GameManager } from "../managers/game_manager";
 import { EndScene } from "./end_scene";
 import { Background } from "../models/background";
+import { LevelManager } from "../level/level_manager";
 
 export class GameScene extends Application {
     constructor() {
@@ -64,8 +64,8 @@ export class GameScene extends Application {
         this.bg = new Background();
         this.gameScene.addChild(this.bg);
 
-        this.gameManager = new GameManager();
-        this.gameScene.addChild(this.gameManager);
+        this.levelManager = new LevelManager();
+        this.gameScene.addChild(this.levelManager);
 
         this.ticker.add((delta) => {
             this.gameLoop(delta);
@@ -73,7 +73,7 @@ export class GameScene extends Application {
     }
 
     gameLoop(delta) {
-        this.gameStatus = this.gameManager.update(delta);
+        this.gameStatus = this.levelManager.update(delta);
         if (this.gameStatus == "loss") {
             this.end(this.gameStatus);
         } else if (this.gameStatus == "win") {
