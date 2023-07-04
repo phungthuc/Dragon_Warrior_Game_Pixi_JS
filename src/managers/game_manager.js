@@ -6,8 +6,10 @@ import { RectangleCollider } from "../collision/rectangle_collider";
 import { GameConstant } from "../constants";
 
 export class GameManager extends Container {
-    constructor() {
+    constructor(dataLevel) {
         super();
+
+        this.dataLevel = dataLevel;
 
         this._init();
 
@@ -26,7 +28,7 @@ export class GameManager extends Container {
         this.bossController.visible = false;
         this.addChild(this.bossController);
 
-        this.pipeManager = new PipeManager();
+        this.pipeManager = new PipeManager(this.dataLevel.numPipe, this.dataLevel.distancePipes, this.dataLevel.pipes);
         this.addChild(this.pipeManager);
 
         this.dragonController = new DragonController(this.pipeManager);

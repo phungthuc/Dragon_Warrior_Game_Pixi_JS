@@ -3,8 +3,13 @@ import { randomInt } from "../utils/utils";
 import { GameConstant } from "../constants";
 
 export class Pipe extends Container {
-    constructor() {
+    constructor(distancePipes, xPipe, yBottomPipe, widthPipe, heightPipe, vPipe, healthPipe) {
         super();
+
+        this.distancePipes = distancePipes;
+        this.xPipe = xPipe;
+        this.vPipe = vPipe;
+        this.heightPipe = heightPipe;
 
         this.style = new TextStyle({
             fontFamily: "Futura",
@@ -14,18 +19,18 @@ export class Pipe extends Container {
         this.pipeTop = new Sprite(utils.TextureCache["assets/images/pipe/pipe_top.png"]);
         this.pipeBottom = new Sprite(utils.TextureCache["assets/images/pipe/pipe_bottom.png"]);
 
-        this.healthTop = 100;
-        this.healthBottom = 100;
+        this.healthTop = healthPipe;
+        this.healthBottom = healthPipe;
 
         this.messHealthTop = new Text(this.healthTop, this.style);
         this.messHealthBottom = new Text(this.healthBottom, this.style);
 
-        this.pipeTop.width = GameConstant.PIPE_WIDTH;
-        this.pipeTop.height = GameConstant.PIPE_HEIGHT;
-        this.pipeBottom.width = GameConstant.PIPE_WIDTH;
-        this.pipeBottom.height = GameConstant.PIPE_HEIGHT;
+        this.pipeTop.width = widthPipe;
+        this.pipeTop.height = this.heightPipe;
+        this.pipeBottom.width = widthPipe;
+        this.pipeBottom.height = this.heightPipe;
 
-        this.positionPipeBottom = randomInt(160, 560);
+        this.positionPipeBottom = yBottomPipe;
 
         this.setPosition();
 
@@ -43,19 +48,19 @@ export class Pipe extends Container {
     update(delta) {
         this.messHealthTop.text = this.healthTop;
         this.messHealthBottom.text = this.healthBottom;
-        this.pipeTop.x -= GameConstant.PIPE_VX;
-        this.pipeBottom.x -= GameConstant.PIPE_VX;
-        this.messHealthTop.x -= GameConstant.PIPE_VX;
-        this.messHealthBottom.x -= GameConstant.PIPE_VX;
+        this.pipeTop.x -= this.vPipe;
+        this.pipeBottom.x -= this.vPipe;
+        this.messHealthTop.x -= this.vPipe;
+        this.messHealthBottom.x -= this.vPipe;
 
     }
 
     setPosition() {
-        this.pipeBottom.position.set(GameConstant.PIPE_X, this.positionPipeBottom);
-        this.pipeTop.position.set(GameConstant.PIPE_X, this.pipeBottom.y - GameConstant.DISTANCE_PIPE - GameConstant.PIPE_HEIGHT);
+        this.pipeBottom.position.set(this.xPipe, this.positionPipeBottom);
+        this.pipeTop.position.set(this.xPipe, this.pipeBottom.y - this.distancePipes - this.heightPipe);
 
-        this.messHealthTop.position.set(GameConstant.PIPE_X + 6, this.pipeBottom.y - GameConstant.DISTANCE_PIPE - 32);
-        this.messHealthBottom.position.set(GameConstant.PIPE_X + 6, this.positionPipeBottom + 12);
+        this.messHealthTop.position.set(this.xPipe + 6, this.pipeBottom.y - this.distancePipes - 32);
+        this.messHealthBottom.position.set(this.xPipe + 6, this.positionPipeBottom + 12);
     }
 
     getPosition() {

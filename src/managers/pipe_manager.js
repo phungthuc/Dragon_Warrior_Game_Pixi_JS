@@ -3,22 +3,27 @@ import { GameConstant } from "../constants";
 import { Pipe } from "../models/pipe";
 
 export const PipeManagerEvent = Object.freeze({
-    EVENT_DONE_PIPE: "pipemanager: done",
+    EVENT_DONE_PIPE: "pipemanager:done",
 });
 
 export class PipeManager extends Container {
-    constructor() {
+    constructor(numPipe, distancePipes, dataPipes) {
         super();
+
+        this.numPipe = numPipe;
+        this.dataPipes = dataPipes;
+        this.distancePipes = distancePipes;
 
         this.pipes = [];
         this.pipesPosition = [];
         this._init();
-        this.countPipe = 0;
+        this.countPipe = 1;
         this.isDone = false;
     }
 
     _init() {
-        this.pipe = new Pipe();
+        this.pipe = new Pipe(this.distancePipes, this.dataPipes[0].x, this.dataPipes[0].y_bottom, this.dataPipes[0].w,
+            this.dataPipes[0].h, this.dataPipes[0].velocity, this.dataPipes[0].health);
         this.addChild(this.pipe);
         this.pipes.push(this.pipe);
         this.pipesPosition.push({
@@ -58,7 +63,8 @@ export class PipeManager extends Container {
     }
 
     create() {
-        this.pipe = new Pipe();
+        this.pipe = new Pipe(this.distancePipes, this.dataPipes[this.countPipe].x, this.dataPipes[this.countPipe].y_bottom, this.dataPipes[this.countPipe].w,
+            this.dataPipes[this.countPipe].h, this.dataPipes[this.countPipe].velocity, this.dataPipes[this.countPipe].health);
         this.addChild(this.pipe);
         this.pipes.push(this.pipe);
         this.pipesPosition.push({
@@ -78,7 +84,7 @@ export class PipeManager extends Container {
     }
 
     addPipe() {
-        if (this.countPipe < GameConstant.PIPE_QUANTITY) {
+        if (this.countPipe < this.numPipe) {
             if (this.pipesPosition[this.pipes.length - 1].xTop < GameConstant.SCREEN_WIDTH / 2 &&
                 this.pipesPosition[this.pipes.length - 1].xBottom < GameConstant.SCREEN_WIDTH / 2) {
                 this.create();
