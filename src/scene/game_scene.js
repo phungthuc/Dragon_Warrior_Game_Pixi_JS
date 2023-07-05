@@ -1,6 +1,5 @@
 import { Application, Container, Loader, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
-import { EndScene } from "./end_scene";
 import { Background } from "../models/background";
 import { LevelManager } from "../level/level_manager";
 
@@ -73,18 +72,7 @@ export class GameScene extends Application {
     }
 
     gameLoop(delta) {
-        this.gameStatus = this.levelManager.update(delta);
-        if (this.gameStatus == "loss") {
-            this.end(this.gameStatus);
-        } else if (this.gameStatus == "win") {
-            this.end(this.gameStatus);
-        }
-    }
-
-    end(status) {
-        this.gameScene.visible = false;
-        this.endScene = new EndScene(status);
-        this.stage.addChild(this.endScene);
+        this.levelManager.update(delta);
     }
 
 } 
