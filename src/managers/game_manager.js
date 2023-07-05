@@ -24,14 +24,14 @@ export class GameManager extends Container {
     }
 
     _init() {
-        this.bossController = new BossController();
+        this.bossController = new BossController(this.dataLevel.boss, this.dataLevel.bossFire);
         this.bossController.visible = false;
         this.addChild(this.bossController);
 
         this.pipeManager = new PipeManager(this.dataLevel.numPipe, this.dataLevel.distancePipes, this.dataLevel.pipes);
         this.addChild(this.pipeManager);
 
-        this.dragonController = new DragonController(this.pipeManager);
+        this.dragonController = new DragonController(this.pipeManager, this.dataLevel.dragonFire);
         this.addChild(this.dragonController);
     }
 

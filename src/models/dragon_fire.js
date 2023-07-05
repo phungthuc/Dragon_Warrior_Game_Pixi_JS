@@ -4,16 +4,17 @@ import { Emitter, Particle } from "pixi-particles";
 import * as  particleSettings from "../emitter.json";
 
 export class DragonFire extends Container {
-    constructor(xP, yP) {
+    constructor(xP, yP, dataDragon) {
         super();
 
         this.dragonFire = new Sprite(utils.TextureCache["assets/images/dragon/iblast_02.png"]);
 
-        this.dragonFire.width = GameConstant.DRAGON_FIRE_WIDTH;
-        this.dragonFire.height = GameConstant.DRAGON_FIRE_HEIGHT;
-
         this.xP = xP;
         this.yP = yP;
+        this.dataDragon = dataDragon;
+
+        this.dragonFire.width = this.dataDragon.w;
+        this.dragonFire.height = this.dataDragon.h;
 
         this.setPosition();
         this.addChild(this.dragonFire);
@@ -26,7 +27,7 @@ export class DragonFire extends Container {
     }
 
     update(delta) {
-        this.dragonFire.x += GameConstant.DRAGON_FIRE_SPEED;
+        this.dragonFire.x += this.dataDragon.velocity;
         if (this.dragonFire.x > GameConstant.SCREEN_HEIGHT + GameConstant.DRAGON_WIDTH) {
             this.removeChild(this.dragonFire);
             return true;

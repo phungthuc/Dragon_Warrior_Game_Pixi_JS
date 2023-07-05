@@ -3,8 +3,11 @@ import { GameConstant } from "../constants";
 import { RectangleCollider } from "../collision/rectangle_collider";
 
 export class Boss extends Container {
-    constructor() {
+    constructor(xBoss, yBoss, widthBoss, heightBoss, healthBoss) {
         super();
+
+        this.xBoss = xBoss;
+        this.yBoss = yBoss;
 
         this.boss = new Sprite(utils.TextureCache["assets/images/boss/cc2d_body_0070.png"]);
 
@@ -14,10 +17,10 @@ export class Boss extends Container {
             fill: "white"
         });
 
-        this.boss.width = GameConstant.BOSS_WIDTH;
-        this.boss.height = GameConstant.BOSS_HEIGHT;
+        this.boss.width = widthBoss;
+        this.boss.height = heightBoss;
 
-        this.health = 100;
+        this.health = healthBoss;
         this.messHealth = new Text(this.health, this.style);
 
         this.setPosition();
@@ -34,8 +37,8 @@ export class Boss extends Container {
     }
 
     setPosition() {
-        this.boss.position.set(GameConstant.BOSS_X, GameConstant.BOSS_Y);
-        this.messHealth.position.set(820, 300)
+        this.boss.position.set(this.xBoss, this.yBoss);
+        this.messHealth.position.set(this.xBoss + 60, this.yBoss - 40)
     }
 
     updateHealth(pipeShot) {

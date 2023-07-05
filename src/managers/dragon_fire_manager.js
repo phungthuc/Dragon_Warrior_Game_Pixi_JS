@@ -5,10 +5,11 @@ import { RectangleCollider } from "../collision/rectangle_collider";
 import { PipeManagerEvent } from "./pipe_manager";
 
 export class DragonFireManager extends Container {
-    constructor(pipeContainer) {
+    constructor(pipeContainer, dataDragon) {
         super();
 
         this.pipeContainer = pipeContainer;
+        this.dataDragon = dataDragon;
 
         this.offsetX = null;
         this.offsetY = null;
@@ -26,7 +27,7 @@ export class DragonFireManager extends Container {
     }
 
     _init() {
-        this.dragonFire = new DragonFire(this.dragonX, this.dragonY);
+        this.dragonFire = new DragonFire(this.dragonX, this.dragonY, this.dataDragon);
         this.addChild(this.dragonFire);
         this.dragonFires.push(this.dragonFire);
     }

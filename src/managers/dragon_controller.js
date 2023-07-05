@@ -4,9 +4,10 @@ import { DragonFireManager } from "./dragon_fire_manager";
 import { GameConstant } from "../constants";
 
 export class DragonController extends Container {
-    constructor(pipeContainer) {
+    constructor(pipeContainer, dataDragon) {
         super();
 
+        this.dataDragon = dataDragon;
         this.pipeContainer = pipeContainer;
 
         this._init();
@@ -17,7 +18,7 @@ export class DragonController extends Container {
         this.dragon = new Dragon();
         this.addChild(this.dragon);
 
-        this.dragonFireManader = new DragonFireManager(this.pipeContainer);
+        this.dragonFireManader = new DragonFireManager(this.pipeContainer, this.dataDragon);
         this.addChild(this.dragonFireManader);
     }
 

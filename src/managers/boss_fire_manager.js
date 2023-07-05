@@ -4,9 +4,10 @@ import { GameConstant } from "../constants";
 import { RectangleCollider } from "../collision/rectangle_collider";
 
 export class BossFireManager extends Container {
-    constructor() {
+    constructor(dataBossFire) {
         super();
 
+        this.dataBossFire = dataBossFire;
         this.bossFires = [];
 
         this._init();
@@ -15,8 +16,8 @@ export class BossFireManager extends Container {
 
     _init() {
         for (let i = 0; i < GameConstant.BOSS_FIRE_QUANTITY; i++) {
-            i % 2 == 0 ? this.bossFire = new BossFire(GameConstant.BOSS_FIRE_ANGLE * i) :
-                this.bossFire = new BossFire(- GameConstant.BOSS_FIRE_ANGLE * i)
+            i % 2 == 0 ? this.bossFire = new BossFire(GameConstant.BOSS_FIRE_ANGLE * i, this.dataBossFire) :
+                this.bossFire = new BossFire(- GameConstant.BOSS_FIRE_ANGLE * i, this.dataBossFire)
             this.addChild(this.bossFire);
             this.bossFires.push(this.bossFire);
         }
@@ -25,10 +26,10 @@ export class BossFireManager extends Container {
     update(delta, dragonPosition) {
         for (let i = 0; i < GameConstant.BOSS_FIRE_QUANTITY; i++) {
             if (i % 2 == 0) {
-                this.bossFires[i].x -= GameConstant.BOSS_FIRE_SPEED;
+                this.bossFires[i].x -= this.dataBossFire.velocity_x;
                 this.bossFires[i].y -= GameConstant.BOSS_FIRE_VY * i;
             } else {
-                this.bossFires[i].x -= GameConstant.BOSS_FIRE_SPEED;
+                this.bossFires[i].x -= this.dataBossFire.velocity_x;
                 this.bossFires[i].y -= -GameConstant.BOSS_FIRE_VY * i;
             }
         }

@@ -4,17 +4,20 @@ import { BossFireManager } from "../managers/boss_fire_manager";
 import { GameConstant } from "../constants";
 
 export class BossController extends Container {
-    constructor() {
+    constructor(dataBoss, dataBossFire) {
         super();
 
+        this.dataBoss = dataBoss;
+        this.dataBossFire = dataBossFire;
         this._init();
     }
 
     _init() {
-        this.boss = new Boss();
+        this.boss = new Boss(this.dataBoss.x, this.dataBoss.y, this.dataBoss.w, this.dataBoss.h,
+            this.dataBoss.health);
         this.addChild(this.boss);
 
-        this.bossFireManager = new BossFireManager();
+        this.bossFireManager = new BossFireManager(this.dataBossFire);
         this.addChild(this.bossFireManager);
     }
 
