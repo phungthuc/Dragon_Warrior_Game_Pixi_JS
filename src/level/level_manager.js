@@ -1,11 +1,11 @@
 import { Container, Text, TextStyle } from "pixi.js";
 import data from "../../public/assets/levels/level.json";
 import { LevelLoader } from "./level_loader";
-import { GameManager } from "../managers/game_manager";
+import { GameManager, GameManagerEvents } from "../managers/game_manager";
 import { StartMenu, StartMenuEvent } from "../scene/start_menu";
-import { RestartMenu } from "../scene/restart_menu";
-import { NextMenu } from "../scene/next_menu";
-import { EndMenu } from "../scene/end_menu";
+import { RestartMenu, RestartMenuEvent } from "../scene/restart_menu";
+import { NextMenu, NextMenuEvents } from "../scene/next_menu";
+import { EndMenu, EndMenuEvent } from "../scene/end_menu";
 
 export class LevelManager extends Container {
     constructor() {
@@ -19,7 +19,7 @@ export class LevelManager extends Container {
         this.statusGame = "startMenu";
         this.isEndGame = false;
 
-        this.load();
+        this._load();
         this._init();
 
         this.textStyle = new TextStyle({
@@ -31,11 +31,9 @@ export class LevelManager extends Container {
 
         this.displayLevel = new Text("Level: " + this.currentLevel, this.textStyle);
         this.addChild(this.displayLevel);
-
-        // this.checkEventEmitter();
     }
 
-    load() {
+    _load() {
         this.dataLevel = data[this.currentLevel - 1];
         this.levelLoader = new LevelLoader(this.dataLevel);
         this.dataLoaded = this.levelLoader.getData();
@@ -46,27 +44,75 @@ export class LevelManager extends Container {
         this.gameManager.visible = false;
         this.isStopGame = true;
         this.addChild(this.gameManager);
+        this._registerEventGameManager();
 
         this.startMenu = new StartMenu();
         this.startMenu.visible = true;
         this.addChild(this.startMenu);
+        this._registerEventStartMenu();
 
         this.restartMenu = new RestartMenu();
         this.restartMenu.visible = false;
         this.addChild(this.restartMenu);
-        this._registerEventStartMenu();
+        this._registerEventRestartMenu();
 
         this.nextMenu = new NextMenu();
         this.nextMenu.visible = false;
         this.addChild(this.nextMenu);
+        this._registerEventNextMenu();
 
         this.endMenu = new EndMenu();
         this.endMenu.visible = false;
         this.addChild(this.endMenu);
+        this._registerEventEndMenu();
+    }
+
+    _registerEventGameManager() {
+        this.gameManager.on(GameManagerEvents.EVENT_LOSS_GAME, this._lossGame, this);
+        this.gameManager.on(GameManagerEvents.EVENT_WIN_GAME, this._winGame, this);
     }
 
     _registerEventStartMenu() {
         this.startMenu.on(StartMenuEvent.ButtonClicked, this._startGame, this);
+    }
+
+    _registerEventRestartMenu() {
+        this.restartMenu.on(RestartMenuEvent.ButtonClicked, this._restartLevel, this);
+    }
+
+    _registerEventNextMenu() {
+        this.nextMenu.on(NextMenuEvents.ButtonRestartLevelOnClicked, this._restartLevel, this);
+        this.nextMenu.on(NextMenuEvents.ButtonNextLevelOnClicked, this._nextLevel, this);
+    }
+
+    _registerEventEndMenu() {
+        this.endMenu.on(EndMenuEvent.ButtonClicked, this._restartLevel, this);
+    }
+
+    _lossGame() {
+        this.isStopGame = true;
+        this.gameManager.visible = false;
+        this.startMenu.visible = false;
+        this.restartMenu.visible = true;
+        this.nextMenu.visible = false;
+        this.endMenu.visible = false;
+    }
+
+    _winGame() {
+        if (this.currentLevel < 3) {
+            this.isStopGame = true;
+            this.gameManager.visible = false;
+            this.startMenu.visible = false;
+            this.restartMenu.visible = false;
+            this.nextMenu.visible = true;
+            this.endMenu.visible = false;
+        } else {
+            this.isStopGame = true;
+            this.gameManager.visible = false;
+            this.startMenu.visible = false;
+            this.restartMenu.visible = false;
+            this.endMenu.visible = true;
+        }
     }
 
     _startGame() {
@@ -78,114 +124,47 @@ export class LevelManager extends Container {
         this.endMenu.visible = false;
     }
 
+    _restartLevel() {
+        this.isStopGame = false;
+        this.startMenu.visible = false;
+        this.restartMenu.visible = false;
+        this.nextMenu.visible = false;
+        this.endMenu.visible = false;
+        this._remove();
+        this._create();
+    }
+
+    _nextLevel() {
+        this.isStopGame = false;
+        this.startMenu.visible = false;
+        this.restartMenu.visible = false;
+        this.nextMenu.visible = false;
+        this._remove();
+        this._createNewLevel();
+    }
+
     update(delta) {
         this.displayLevel.text = "Level: " + this.currentLevel;
         if (this.isStopGame == false && this.currentLevel <= 3) {
             this.statusGame = this.gameManager.update(delta);
         }
-        // this.checkStatusGame();
     }
 
-    remove() {
+    _remove() {
         this.removeChild(this.gameManager);
     }
 
-    create() {
+    _create() {
         this.gameManager = new GameManager(this.dataLoaded);
         this.gameManager.visible = true;
         this.isStopGame = false;
+        this._registerEventGameManager();
         this.addChild(this.gameManager);
     }
 
-    createNewLevel() {
+    _createNewLevel() {
         this.currentLevel += 1;
-        this.load();
-        this.create();
+        this._load();
+        this._create();
     }
-
-    checkStatusGame() {
-        switch (this.statusGame) {
-            case "startMenu":
-                this.gameManager.visible = false;
-                this.startMenu.visible = true;
-                this.restartMenu.visible = false;
-                this.nextMenu.visible = false;
-                this.endMenu.visible = false;
-                this.startMenu.onCollision();
-                break;
-            case "startGame":
-                this.isStopGame = false;
-                this.gameManager.visible = true;
-                this.restartMenu.visible = false;
-                this.startMenu.visible = false;
-                this.nextMenu.visible = false;
-                this.endMenu.visible = false;
-                break;
-            case "loss":
-                this.isStopGame = true;
-                this.gameManager.visible = false;
-                this.startMenu.visible = false;
-                this.restartMenu.visible = true;
-                this.nextMenu.visible = false;
-                this.endMenu.visible = false;
-                this.restartMenu.onCollision();
-                break;
-            case "restartGame":
-                this.isStopGame = false;
-                this.startMenu.visible = false;
-                this.restartMenu.visible = false;
-                this.nextMenu.visible = false;
-                this.endMenu.visible = false;
-                this.remove();
-                this.create();
-                break;
-            case "win":
-                if (this.currentLevel < 3) {
-                    this.isStopGame = true;
-                    this.gameManager.visible = false;
-                    this.startMenu.visible = false;
-                    this.restartMenu.visible = false;
-                    this.nextMenu.visible = true;
-                    this.endMenu.visible = false;
-                    this.nextMenu.onCollision();
-                } else {
-                    this.isStopGame = true;
-                    this.gameManager.visible = false;
-                    this.startMenu.visible = false;
-                    this.restartMenu.visible = false;
-                    this.endMenu.visible = true;
-                    this.endMenu.onCollision();
-                }
-                break;
-            case "nextGame":
-                this.isStopGame = false;
-                this.startMenu.visible = false;
-                this.restartMenu.visible = false;
-                this.nextMenu.visible = false;
-                this.remove();
-                this.createNewLevel();
-                break;
-            default:
-                break;
-        }
-    }
-
-    checkEventEmitter() {
-        this.startMenu.on("start", () => {
-            this.statusGame = "startGame";
-        });
-        this.restartMenu.on("restart", () => {
-            this.statusGame = "restartGame";
-        });
-        this.nextMenu.on("restartLevel", () => {
-            this.statusGame = "restartGame";
-        });
-        this.nextMenu.on("nextLevel", () => {
-            this.statusGame = "nextGame";
-        });
-        this.endMenu.on("restartLevel", () => {
-            this.statusGame = "restartGame";
-        });
-    }
-
 }

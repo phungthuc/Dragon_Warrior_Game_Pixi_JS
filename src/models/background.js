@@ -18,7 +18,7 @@ export class Background extends Container {
         this.layer_11 = new Sprite(utils.TextureCache["assets/images/background/Layer_0001_8.png"]);
         this.layer_12 = new Sprite(utils.TextureCache["assets/images/background/Layer_0000_9.png"]);
 
-        this.setup();
+        this._setup();
 
         this.addChild(this.layer_01);
         this.addChild(this.layer_02);
@@ -34,7 +34,7 @@ export class Background extends Container {
         this.addChild(this.layer_12);
     }
 
-    setup() {
+    _setup() {
         this.layer_01.position.set(0, 0);
         this.layer_01.width = GameConstant.SCREEN_WIDTH;
         this.layer_01.height = GameConstant.SCREEN_HEIGHT;

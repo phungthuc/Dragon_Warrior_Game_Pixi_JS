@@ -55,11 +55,11 @@ export class GameScene extends Application {
             .add("particles", "assets/images/dragon/emitter.json")
             .add("assets/images/dragon/particle.png")
             .load(() => {
-                this.setup();
+                this._setup();
             });
     }
 
-    setup() {
+    _setup() {
         this.bg = new Background();
         this.gameScene.addChild(this.bg);
 
