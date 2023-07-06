@@ -1,5 +1,5 @@
 import { Container, Text, TextStyle } from "pixi.js";
-import { GameMenuConst } from "./start_menu";
+import { GameMenuConst } from "./startMenu";
 
 export const RestartMenuEvent = Object.freeze({
     ButtonClicked: "button:clicked"

@@ -1,8 +1,8 @@
 import { Container } from "pixi.js";
-import { DragonFire } from "../models/dragon_fire";
+import { DragonFire } from "../models/dragonFire";
 import { GameConstant } from "../constants";
-import { RectangleCollider } from "../collision/rectangle_collider";
-import { PipeManagerEvent } from "./pipe_manager";
+import { RectangleCollider } from "../collision/rectangleCollider";
+import { PipeManagerEvent } from "./pipeManager";
 
 export class DragonFireManager extends Container {
     constructor(pipeContainer, dataDragon) {

@@ -1,6 +1,6 @@
 import { Container } from "pixi.js";
 import { Dragon } from "../models/dragon";
-import { DragonFireManager } from "./dragon_fire_manager";
+import { DragonFireManager } from "./dragonFireManager";
 import { GameConstant } from "../constants";
 
 export class DragonController extends Container {

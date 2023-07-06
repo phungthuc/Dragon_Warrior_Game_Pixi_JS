@@ -1,7 +1,7 @@
 import { Application, Container, Loader, Sprite, utils } from "pixi.js";
 import { GameConstant } from "../constants";
 import { Background } from "../models/background";
-import { LevelManager } from "../level/level_manager";
+import { LevelManager } from "../level/levelManager";
 
 export class GameScene extends Application {
     constructor() {

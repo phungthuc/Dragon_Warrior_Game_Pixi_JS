@@ -1,11 +1,11 @@
 import { Container, Text, TextStyle } from "pixi.js";
 import data from "../../public/assets/levels/level.json";
-import { LevelLoader } from "./level_loader";
-import { GameManager, GameManagerEvents } from "../managers/game_manager";
-import { StartMenu, StartMenuEvent } from "../scene/start_menu";
-import { RestartMenu, RestartMenuEvent } from "../scene/restart_menu";
-import { NextMenu, NextMenuEvents } from "../scene/next_menu";
-import { EndMenu, EndMenuEvent } from "../scene/end_menu";
+import { LevelLoader } from "./levelLoader";
+import { GameManager, GameManagerEvents } from "../managers/gameManager";
+import { StartMenu, StartMenuEvent } from "../scene/startMenu";
+import { RestartMenu, RestartMenuEvent } from "../scene/restartMenu";
+import { NextMenu, NextMenuEvents } from "../scene/nextMenu";
+import { EndMenu, EndMenuEvent } from "../scene/endMenu";
 
 export class LevelManager extends Container {
     constructor() {

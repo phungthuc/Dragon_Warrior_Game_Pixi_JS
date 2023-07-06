@@ -1,8 +1,8 @@
 import { Container } from "pixi.js";
-import { BossController } from "./boss_controller";
-import { DragonController } from "./dragon_controller";
-import { PipeManager, PipeManagerEvent } from "./pipe_manager";
-import { RectangleCollider } from "../collision/rectangle_collider";
+import { BossController } from "./bossController";
+import { DragonController } from "./dragonController";
+import { PipeManager, PipeManagerEvent } from "./pipeManager";
+import { RectangleCollider } from "../collision/rectangleCollider";
 import { GameConstant } from "../constants";
 
 export const GameManagerEvents = Object.freeze({

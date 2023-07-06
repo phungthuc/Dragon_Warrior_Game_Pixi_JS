@@ -1,11 +1,12 @@
 import { Container, Text, TextStyle } from "pixi.js";
-import { GameMenuConst } from "./start_menu";
+import { GameMenuConst } from "./startMenu";
 
-export const EndMenuEvent = Object.freeze({
-    ButtonClicked: "button:clicked"
+export const NextMenuEvents = Object.freeze({
+    ButtonRestartLevelOnClicked: "buttonrestart:clicked",
+    ButtonNextLevelOnClicked: "buttonnext:clicked"
 });
 
-export class EndMenu extends Container {
+export class NextMenu extends Container {
     constructor() {
         super();
 
@@ -27,27 +28,33 @@ export class EndMenu extends Container {
         this.styleButton = new TextStyle({
             fill: "#099036",
             fontFamily: "Times New Roman",
-            fontSize: 40,
             fontWeight: 600
         });
 
         this.nameGame = new Text("Dragon Warrior", this.styleName);
         this.addChild(this.nameGame);
 
-        this.winMess = new Text("You Win", this.styleName);
-        this.winMess.position.set(80, 120)
-        this.addChild(this.winMess);
-
         this.restartLevel = new Text("Restart", this.styleButton);
-        this.restartLevel.position.set(90, 200)
+        this.restartLevel.position.set(100, 100)
         this.restartLevel.width = 120;
         this.restartLevel.height = 40;
         this.restartLevel.interactive = true;
         this.restartLevel.buttonMode = true;
         this.addChild(this.restartLevel);
 
+        this.nextLevelMess = new Text("Next", this.styleButton);
+        this.nextLevelMess.position.set(120, 200)
+        this.nextLevelMess.width = 80;
+        this.nextLevelMess.height = 40;
+        this.nextLevelMess.interactive = true;
+        this.nextLevelMess.buttonMode = true;
+        this.addChild(this.nextLevelMess);
+
         this.restartLevel.on("pointerdown", () => {
-            this.emit(EndMenuEvent.ButtonClicked);
+            this.emit(NextMenuEvents.ButtonRestartLevelOnClicked);
+        });
+        this.nextLevelMess.on("pointerdown", () => {
+            this.emit(NextMenuEvents.ButtonNextLevelOnClicked);
         });
     }
 }

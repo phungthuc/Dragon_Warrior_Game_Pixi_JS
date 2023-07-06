@@ -1,6 +1,6 @@
 import { Container, Sprite, Text, TextStyle, utils } from "pixi.js";
 import { GameConstant } from "../constants";
-import { RectangleCollider } from "../collision/rectangle_collider";
+import { RectangleCollider } from "../collision/rectangleCollider";
 
 export class Boss extends Container {
     constructor(xBoss, yBoss, widthBoss, heightBoss, healthBoss) {
