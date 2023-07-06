@@ -27,7 +27,7 @@ export class DragonFire extends Container {
     }
 
     update(delta) {
-        this.dragonFire.x += this.dataDragon.velocity;
+        this.dragonFire.x += this.dataDragon.velocity * delta;
         if (this.dragonFire.x > GameConstant.SCREEN_HEIGHT + GameConstant.DRAGON_WIDTH) {
             this.removeChild(this.dragonFire);
             return true;

@@ -26,11 +26,11 @@ export class BossFireManager extends Container {
     update(delta, dragonPosition) {
         for (let i = 0; i < GameConstant.BOSS_FIRE_QUANTITY; i++) {
             if (i % 2 == 0) {
-                this.bossFires[i].x -= this.dataBossFire.velocity_x;
-                this.bossFires[i].y -= GameConstant.BOSS_FIRE_VY * i;
+                this.bossFires[i].x -= this.dataBossFire.velocity_x * delta;
+                this.bossFires[i].y -= GameConstant.BOSS_FIRE_VY * i * delta;
             } else {
-                this.bossFires[i].x -= this.dataBossFire.velocity_x;
-                this.bossFires[i].y -= -GameConstant.BOSS_FIRE_VY * i;
+                this.bossFires[i].x -= this.dataBossFire.velocity_x * delta;
+                this.bossFires[i].y -= -GameConstant.BOSS_FIRE_VY * i * delta;
             }
         }
 

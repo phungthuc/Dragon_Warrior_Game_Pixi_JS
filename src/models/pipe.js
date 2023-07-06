@@ -48,10 +48,10 @@ export class Pipe extends Container {
     update(delta) {
         this.messHealthTop.text = this.healthTop;
         this.messHealthBottom.text = this.healthBottom;
-        this.pipeTop.x -= this.vPipe;
-        this.pipeBottom.x -= this.vPipe;
-        this.messHealthTop.x -= this.vPipe;
-        this.messHealthBottom.x -= this.vPipe;
+        this.pipeTop.x -= this.vPipe * delta;
+        this.pipeBottom.x -= this.vPipe * delta;
+        this.messHealthTop.x -= this.vPipe * delta;
+        this.messHealthBottom.x -= this.vPipe * delta;
 
     }
 
