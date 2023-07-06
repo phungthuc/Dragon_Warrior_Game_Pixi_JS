@@ -1,6 +1,10 @@
 import { Container, Text, TextStyle } from "pixi.js";
 import { GameMenuConst } from "./start_menu";
 
+export const NextMenuEvents = Object.freeze({
+    ButtonRestartLevelOnClicked: "buttonrestart:clicked",
+    ButtonNextLevelOnClicked: "buttonnext:clicked"
+});
 
 export class NextMenu extends Container {
     constructor() {
@@ -46,15 +50,11 @@ export class NextMenu extends Container {
         this.nextLevelMess.buttonMode = true;
         this.addChild(this.nextLevelMess);
 
-    }
-
-    onCollision() {
         this.restartLevel.on("pointerdown", () => {
-            this.emit("restartLevel");
+            this.emit(NextMenuEvents.ButtonRestartLevelOnClicked);
         });
         this.nextLevelMess.on("pointerdown", () => {
-            this.emit("nextLevel");
+            this.emit(NextMenuEvents.ButtonNextLevelOnClicked);
         });
     }
-
 }

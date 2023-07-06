@@ -1,6 +1,10 @@
 import { Container, Text, TextStyle } from "pixi.js";
 import { GameMenuConst } from "./start_menu";
 
+export const EndMenuEvent = Object.freeze({
+    ButtonClicked: "button:clicked"
+});
+
 export class EndMenu extends Container {
     constructor() {
         super();
@@ -42,12 +46,8 @@ export class EndMenu extends Container {
         this.restartLevel.buttonMode = true;
         this.addChild(this.restartLevel);
 
-    }
-
-    onCollision() {
         this.restartLevel.on("pointerdown", () => {
-            this.emit("restartLevel");
+            this.emit(EndMenuEvent.ButtonClicked);
         });
     }
-
 }

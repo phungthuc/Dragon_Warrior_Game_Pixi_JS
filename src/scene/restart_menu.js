@@ -1,6 +1,9 @@
 import { Container, Text, TextStyle } from "pixi.js";
 import { GameMenuConst } from "./start_menu";
 
+export const RestartMenuEvent = Object.freeze({
+    ButtonClicked: "button:clicked"
+});
 export class RestartMenu extends Container {
     constructor() {
         super();
@@ -39,12 +42,8 @@ export class RestartMenu extends Container {
         this.restartMess.buttonMode = true;
         this.addChild(this.restartMess);
 
-    }
-
-    onCollision() {
         this.restartMess.on("pointerdown", () => {
-            this.emit("restart");
+            this.emit(RestartMenuEvent.ButtonClicked);
         });
     }
-
 }
