@@ -74,6 +74,7 @@ export class Pipe extends Container {
 
 
     onCollision() {
+
     }
 
     updateHealth(position) {

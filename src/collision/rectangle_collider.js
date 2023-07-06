@@ -1,5 +1,6 @@
 export class RectangleCollider {
     constructor() {
+
     }
 
     checkCollision(objX1, objY1, objWidth1, objHeight1, objX2, objY2, objWidth2, objHeight2) {

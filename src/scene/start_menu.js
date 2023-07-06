@@ -49,12 +49,9 @@ export class StartMenu extends Container {
         this.startMess.interactive = true;
         this.startMess.buttonMode = true;
         this.addChild(this.startMess);
+
         this.startMess.on("pointerdown", () => {
             this.emit(StartMenuEvent.ButtonClicked);
         });
-    }
-
-    onCollision() {
-
     }
 }

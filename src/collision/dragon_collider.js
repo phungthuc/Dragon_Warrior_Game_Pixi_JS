@@ -2,6 +2,7 @@ import { GameConstant } from "../constants";
 
 export class DragonCollider {
     constructor() {
+
     }
 
     wallCollision(y) {
