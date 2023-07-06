@@ -1,7 +1,7 @@
 import { Container, ParticleContainer, Point, Sprite, resources, utils } from "pixi.js";
 import { GameConstant } from "../constants";
 import { Emitter, Particle } from "pixi-particles";
-import * as  particleSettings from "../emitter.json";
+import * as  particleSettings from "../../public/assets/images/emitter.json";
 
 export class DragonFire extends Container {
     constructor(xP, yP, dataDragon) {
