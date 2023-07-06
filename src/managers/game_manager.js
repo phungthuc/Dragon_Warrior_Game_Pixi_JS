@@ -5,6 +5,11 @@ import { PipeManager, PipeManagerEvent } from "./pipe_manager";
 import { RectangleCollider } from "../collision/rectangle_collider";
 import { GameConstant } from "../constants";
 
+export const GameManagerEvents = Object.freeze({
+    EVENT_LOSS_GAME: "gamemanager:loss",
+    EVENT_WIN_GAME: "gamemanager:win"
+});
+
 export class GameManager extends Container {
     constructor(dataLevel) {
         super();
@@ -44,18 +49,17 @@ export class GameManager extends Container {
             this.pipeManager.update(delta, this.pipeShot);
         }
         this.onCollision();
-        return this.gameStatus;
     }
 
     onCollision() {
         this.dragonController.on(GameConstant.EVENT_LOSS_GAME, () => {
-            this.gameStatus = "loss";
+            this.emit(GameManagerEvents.EVENT_LOSS_GAME);
         });
         this.bossController.on(GameConstant.EVENT_LOSS_GAME, () => {
-            this.gameStatus = "loss";
+            this.emit(GameManagerEvents.EVENT_LOSS_GAME);
         });
         this.bossController.on(GameConstant.EVENT_WIN_GAME, () => {
-            this.gameStatus = "win";
+            this.emit(GameManagerEvents.EVENT_WIN_GAME);
         });
         this.pipeManager.on(PipeManagerEvent.EVENT_DONE_PIPE, () => {
             this.bossController.visible = true;
